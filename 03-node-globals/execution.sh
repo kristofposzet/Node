@@ -1,0 +1,1 @@
+node node_globals.js globalProcess --user Kristof --age 18
