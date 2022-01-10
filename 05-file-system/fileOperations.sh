@@ -1,0 +1,1 @@
+node fileOperations.js --dirName lajcsi --fileName lajcsiFile.txt
