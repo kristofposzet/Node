@@ -4,7 +4,7 @@ class GarageService {
   constructor(garageCleaningService) {
     this.garageCleaningService = garageCleaningService;
 
-    this.garagesList = new Map();
+    this.garagesWithCar = new Map();
   }
 
   parkCarInFreeGarage(car) {
@@ -26,7 +26,7 @@ class GarageService {
   }
 
   parkWheels(g, c) {
-    this.garagesList.set(g, c);
+    this.garagesWithCar.set(g, c);
   }
 
   findFreeGarage(garages) {
@@ -34,7 +34,7 @@ class GarageService {
   }
 
   isFree(garageNumber) {
-    return !this.garagesList.has(garageNumber);
+    return !this.garagesWithCar.has(garageNumber);
   }
 }
 
