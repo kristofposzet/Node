@@ -1,13 +1,13 @@
 export class Car {
-  constructor(sManufacturer, sModel, iYear, clsscCr) {
-    this.sManufacturer = sManufacturer;
-    this.sModel = sModel;
-    this.iYear = iYear;
+  constructor(manufacturer, model, year, isClassic) {
+    this.manufacturer = manufacturer;
+    this.model = model;
+    this.year = year;
     //is car classic or not?
-    this.clsscCr = clsscCr;
+    this.isClassic = isClassic;
   }
 
   toString() {
-    return `${this.sManufacturer} ${this.sModel} [${this.iYear}] ${this.clsscCr ? 'C' : 'S'}`;
+    return `${this.manufacturer} ${this.model} [${this.year}] ${this.isClassic ? 'C' : 'S'}`;
   }
 }
