@@ -9,7 +9,7 @@ class GarageService {
 
   parkCarInFreeGarage(car) {
     const garages = car.isClassic ? GarageService.GARAGES1 : GarageService.GARAGES2;
-    const garage = this.someoneHasFreeSpace(garages);
+    const garage = this.findFreeGarage(garages);
 
     if (!garage) {
       throw new Error('Free garage is not found');
@@ -29,7 +29,7 @@ class GarageService {
     this.garagesList.set(g, c);
   }
 
-  someoneHasFreeSpace(garages) {
+  findFreeGarage(garages) {
     return garages.find((garage) => this.free(garage));
   }
 
