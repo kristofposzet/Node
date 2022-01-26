@@ -1,8 +1,8 @@
 'use strict';
 
 class GarageService {
-  constructor(serviceToCleanGarage) {
-    this.srv = serviceToCleanGarage;
+  constructor(garageCleaningService) {
+    this.garageCleaningService = garageCleaningService;
 
     this.garagesList = new Map();
   }
@@ -22,7 +22,7 @@ class GarageService {
   }
 
   wash(garage) {
-    this.srv.cleaning(garage);
+    this.garageCleaningService.cleaning(garage);
   }
 
   parkWheels(g, c) {
