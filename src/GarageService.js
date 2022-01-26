@@ -29,10 +29,8 @@ class GarageService {
     this.garagesList.set(g, c);
   }
 
-  someoneHasFreeSpace(garageNumbersToCheckAreTheyPotentiallyFree) {
-    return garageNumbersToCheckAreTheyPotentiallyFree.find((garageNumberToCheckIfItsFree) =>
-      this.free(garageNumberToCheckIfItsFree)
-    );
+  someoneHasFreeSpace(garages) {
+    return garages.find((garage) => this.free(garage));
   }
 
   free(garageNumber) {
