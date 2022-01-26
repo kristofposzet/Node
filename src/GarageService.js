@@ -40,7 +40,7 @@ class GarageService {
   }
 }
 
-GarageService.GARAGES1 = [1, 7]; // more secure garages
-GarageService.GARAGES2 = [2, 3, 4, 5, 6];
+GarageService.SECURE_GARAGES = [1, 7];
+GarageService.SIMPLE_GARAGES = [2, 3, 4, 5, 6];
 
 module.exports = { GarageService };
