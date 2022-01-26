@@ -15,14 +15,14 @@ class GarageService {
       throw new Error('Free garage is not found');
     }
 
-    this.wash(garage);
+    this.clean(garage);
     this.parkWheels(garage, car);
 
     return garage;
   }
 
-  wash(garage) {
-    this.garageCleaningService.cleaning(garage);
+  clean(garage) {
+    this.garageCleaningService.clean(garage);
   }
 
   parkWheels(g, c) {
