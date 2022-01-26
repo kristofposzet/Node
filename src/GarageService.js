@@ -7,8 +7,8 @@ export class GarageService {
     this.garagesList = new Map();
   }
 
-  parkCarInFreeGarage(pCar) {
-    const garages = pCar.clsscCr ? GarageService.GARAGES1 : GarageService.GARAGES2;
+  parkCarInFreeGarage(car) {
+    const garages = car.clsscCr ? GarageService.GARAGES1 : GarageService.GARAGES2;
     const g = this.someoneHasFreeSpace(garages);
 
     if (!g) {
@@ -16,7 +16,7 @@ export class GarageService {
     }
 
     this.wash(g);
-    this.parkWheels(g, pCar);
+    this.parkWheels(g, car);
 
     return g;
   }
