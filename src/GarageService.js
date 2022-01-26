@@ -7,7 +7,7 @@ class GarageService {
     this.garagesWithCar = new Map();
   }
 
-  parkCarInFreeGarage(car) {
+  registerInGarage(car) {
     const garages = car.isClassic ? GarageService.GARAGES1 : GarageService.GARAGES2;
     const garage = this.findFreeGarage(garages);
 
@@ -16,7 +16,7 @@ class GarageService {
     }
 
     this.clean(garage);
-    this.parkCar(garage, car);
+    this.registerCar(garage, car);
 
     return garage;
   }
@@ -25,7 +25,7 @@ class GarageService {
     this.garageCleaningService.clean(garage);
   }
 
-  parkCar(g, c) {
+  registerCar(g, c) {
     this.garagesWithCar.set(g, c);
   }
 
