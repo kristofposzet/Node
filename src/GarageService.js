@@ -16,7 +16,7 @@ class GarageService {
     }
 
     this.clean(garage);
-    this.parkWheels(garage, car);
+    this.parkCar(garage, car);
 
     return garage;
   }
@@ -25,7 +25,7 @@ class GarageService {
     this.garageCleaningService.clean(garage);
   }
 
-  parkWheels(g, c) {
+  parkCar(g, c) {
     this.garagesWithCar.set(g, c);
   }
 
