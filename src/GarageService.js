@@ -30,10 +30,10 @@ class GarageService {
   }
 
   findFreeGarage(garages) {
-    return garages.find((garage) => this.free(garage));
+    return garages.find((garage) => this.isFree(garage));
   }
 
-  free(garageNumber) {
+  isFree(garageNumber) {
     return !this.garagesList.has(garageNumber);
   }
 }
