@@ -1,6 +1,6 @@
 'use strict';
 
-export class GarageService {
+class GarageService {
   constructor(serviceToCleanGarage) {
     this.srv = serviceToCleanGarage;
 
@@ -8,17 +8,17 @@ export class GarageService {
   }
 
   parkCarInFreeGarage(car) {
-    const garages = car.clsscCr ? GarageService.GARAGES1 : GarageService.GARAGES2;
-    const g = this.someoneHasFreeSpace(garages);
+    const garages = car.isClassic ? GarageService.GARAGES1 : GarageService.GARAGES2;
+    const garage = this.someoneHasFreeSpace(garages);
 
-    if (!g) {
+    if (!garage) {
       throw new Error('Free garage is not found');
     }
 
-    this.wash(g);
-    this.parkWheels(g, car);
+    this.wash(garage);
+    this.parkWheels(garage, car);
 
-    return g;
+    return garage;
   }
 
   wash(garage) {
@@ -42,3 +42,5 @@ export class GarageService {
 
 GarageService.GARAGES1 = [1, 7]; // more secure garages
 GarageService.GARAGES2 = [2, 3, 4, 5, 6];
+
+module.exports = { GarageService };

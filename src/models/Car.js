@@ -1,4 +1,4 @@
-export class Car {
+class Car {
   constructor(manufacturer, model, year, isClassic) {
     this.manufacturer = manufacturer;
     this.model = model;
@@ -15,3 +15,5 @@ export class Car {
 
 Car.CLASSIC_CAR_ABBREVIATION = 'C';
 Car.SIMPLE_CAR_ABBREVIATION = 'S';
+
+module.exports = { Car };
