@@ -4,7 +4,8 @@ const ALL_DIGITS = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 let table = [],
   result = '',
   solution = '',
-  input;
+  input,
+  noTableAction = true;
 
 exports.findSimpleSolution = () => {
   result = solution = '';
@@ -142,37 +143,29 @@ const tryFindSImpleSolution = () => {
       return;
     }
 
-    if (trySolveSudoku()) {
+    trySolveSudoku();
+    if (noTableAction) {
       throw new ComplexSudokuError();
     }
   }
 
   function trySolveSudoku() {
-    let isNotPerformedAction = true;
+    noTableAction = true;
     for (let i = 0; i < 9; i++) {
       for (let j = 0; j < 9; j++) {
-        let isCellActionPerformed = false;
-        if (table[i][j] == 0 && trySolveCell(i, j)) {
-          isCellActionPerformed = true;
-        }
-        if (isCellActionPerformed) {
-          isNotPerformedAction = false;
+        if (table[i][j] === 0) {
+          trySolveCell(i, j);
         }
       }
     }
-    return isNotPerformedAction;
   }
 
   function trySolveCell(i, j) {
-    let isCellActionPerformed = false;
-
     let solvedCell = tryFindSolvedCell(i, j);
     if (solvedCell > 0) {
-      isCellActionPerformed = true;
+      noTableAction = false;
       table[i][j] = solvedCell;
-      4;
     }
-    return isCellActionPerformed;
   }
 };
 
