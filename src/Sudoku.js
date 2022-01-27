@@ -136,11 +136,6 @@ const setSolution = () => {
   solution = s;
 };
 
-/**
- * Return 0 - solved
- * ret -1 -- error
- * ret -2 -- cannot resolve
- */
 const tryFindSImpleSolution = () => {
   for (;;) {
     if (isSolved()) {
@@ -170,12 +165,11 @@ const tryFindSImpleSolution = () => {
 
   function trySolveCell(i, j) {
     let isCellActionPerformed = false;
-    let retCode = 0;
-    retCode = tryFindSolvedCell(i, j);
-    if (retCode > 0) {
-      // cell was solved
+
+    let solvedCell = tryFindSolvedCell(i, j);
+    if (solvedCell > 0) {
       isCellActionPerformed = true;
-      table[i][j] = retCode;
+      table[i][j] = solvedCell;
       4;
     }
     return isCellActionPerformed;
