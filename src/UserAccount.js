@@ -9,22 +9,26 @@ class UserAccount {
 
   recalculateBalance() {
     for (const service of this.services) {
-      const tariffs = service.getTariffs();
       const h = this.calculationHistoryService.retrieveHistory(service);
-
-      let highestTariff = 0;
-      if (tariffs.length) {
-        for (const tariff of tariffs) {
-          highestTariff = Math.max(
-            highestTariff,
-            this.calculateUnapplied(tariff, h.getAllFees(tariff, service))
-          );
-        }
-      }
+      let highestTariff = this.getHighestTariff(service, h);
 
       h.applyRecalculation(highestTariff, UNIT_RATE);
       this.balance.updateBalance(highestTariff);
     }
+  }
+
+  getHighestTariff(service, h) {
+    const tariffs = service.getTariffs();
+    let highestTariff = 0;
+    if (tariffs.length) {
+      for (const tariff of tariffs) {
+        highestTariff = Math.max(
+          highestTariff,
+          this.calculateUnapplied(tariff, h.getAllFees(tariff, service))
+        );
+      }
+    }
+    return highestTariff;
   }
 
   getLastCalculationDate() {
