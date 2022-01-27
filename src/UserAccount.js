@@ -11,10 +11,13 @@ class UserAccount {
     for (const service of this.services) {
       const h = this.calculationHistoryService.retrieveHistory(service);
       let highestTariff = this.getHighestTariff(service, h);
-
-      h.applyRecalculation(highestTariff, UNIT_RATE);
-      this.balance.updateBalance(highestTariff);
+      this.payTariff(h, highestTariff);
     }
+  }
+
+  payTariff(h, highestTariff) {
+    h.applyRecalculation(highestTariff, UNIT_RATE);
+    this.balance.updateBalance(highestTariff);
   }
 
   getHighestTariff(service, h) {
