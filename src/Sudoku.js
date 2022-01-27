@@ -9,12 +9,20 @@ let table = [],
 exports.findSimpleSolution = () => {
   result = solution = '';
   initCellsFromInput();
-  const r = tryFindSImpleSolution();
-  if (r === 0) {
-    result = 'We did it ! Congratulations !\n' + 'Simple!\n';
-  }
-  if (r === -2) {
-    result = 'Too complex sudoku';
+  try {
+    const r = tryFindSImpleSolution();
+    if (r === 0) {
+      result = 'We did it ! Congratulations !\n' + 'Simple!\n';
+      setSolution();
+    }
+    if (r === -2) {
+      result = 'Too complex sudoku';
+    }
+  } catch (err) {
+    if (err instanceof NoVariantsError) {
+      result = 'ERROR: input is not a sudoku\n';
+      return -1;
+    }
   }
 };
 
@@ -138,32 +146,24 @@ const setSolution = () => {
 const tryFindSImpleSolution = () => {
   for (;;) {
     if (isSolved()) {
-      setSolution();
       return 0;
     }
-    try {
-      let isNotPerformedAction = true;
-      for (let i = 0; i < 9; i++) {
-        for (let j = 0; j < 9; j++) {
-          let isCellActionPerformed = false;
-          if (table[i][j] && trySolveCell(i, j)) {
-            isCellActionPerformed = true;
-          }
-          if (isCellActionPerformed) {
-            isNotPerformedAction = false;
-          }
+    let isNotPerformedAction = true;
+    for (let i = 0; i < 9; i++) {
+      for (let j = 0; j < 9; j++) {
+        let isCellActionPerformed = false;
+        if (table[i][j] == 0 && trySolveCell(i, j)) {
+          isCellActionPerformed = true;
+        }
+        if (isCellActionPerformed) {
+          isNotPerformedAction = false;
         }
       }
+    }
 
-      if (isNotPerformedAction) {
-        // no action for whole table of cells
-        return -2;
-      }
-    } catch (err) {
-      if (err instanceof NoVariantsError) {
-        result = 'ERROR: input is not a sudoku\n';
-        return -1;
-      }
+    if (isNotPerformedAction) {
+      // no action for whole table of cells
+      return -2;
     }
   }
 
