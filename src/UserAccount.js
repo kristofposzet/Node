@@ -1,5 +1,6 @@
 'use strict';
 
+const UNIT_RATE = 0.8;
 class UserAccount {
   constructor() {
     this.paymentDates = [];
@@ -7,8 +8,6 @@ class UserAccount {
   }
 
   recalculateBalance() {
-    const unitRate = 0.8;
-
     for (const service of this.services) {
       const tariffs = service.getTariffs();
       const h = this.calculationHistoryService.retrieveHistory(service);
@@ -27,23 +26,23 @@ class UserAccount {
           const tariffType = tariff.getType();
           highestTariff = Math.max(
             highestTariff,
-            this.calculateUnapplied(tariff, d, h, unitRate, tariffType, service)
+            this.calculateUnapplied(tariff, d, h, tariffType, service)
           );
         }
       }
 
-      h.applyRecalculation(highestTariff, unitRate);
+      h.applyRecalculation(highestTariff, UNIT_RATE);
       this.balance.updateBalance(highestTariff);
     }
   }
 
-  calculateUnapplied(tariff, lastCalculationDate, h, unitRate, t, service) {
+  calculateUnapplied(tariff, lastCalculationDate, h, t, service) {
     const fees = h.getAllFees(tariff, service);
     let sum = 0;
 
     for (const date of fees.keys()) {
       if (date > lastCalculationDate) {
-        sum += fees.get(date) * (t.isUnitBased() ? unitRate : 1) + tariff.getAdditionalFee();
+        sum += fees.get(date) * (t.isUnitBased() ? UNIT_RATE : 1) + tariff.getAdditionalFee();
       }
     }
     return sum;
