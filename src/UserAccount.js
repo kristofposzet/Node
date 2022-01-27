@@ -50,12 +50,19 @@ class UserAccount {
     let sum = 0;
     for (const date of fees.keys()) {
       if (date > this.getLastCalculationDate()) {
-        sum +=
-          fees.get(date) * (tariff.getType().isUnitBased() ? UNIT_RATE : 1) +
-          tariff.getAdditionalFee();
+        sum += this.calculateFee(fees.get(date), tariff);
       }
     }
     return sum;
+  }
+
+  calculateFee(fee, tariff) {
+    return fee * this.getRate(tariff) + tariff.getAdditionalFee();
+  }
+
+  getRate(tariff) {
+    const isUnitBased = tariff.getType().isUnitBased();
+    return isUnitBased ? UNIT_RATE : 1;
   }
 
   setCalculationHistoryService(calculationHistoryService) {
