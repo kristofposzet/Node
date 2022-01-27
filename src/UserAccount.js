@@ -12,20 +12,12 @@ class UserAccount {
       const tariffs = service.getTariffs();
       const h = this.calculationHistoryService.retrieveHistory(service);
 
-      //find last calculation date
-      let latest = UserAccount.EPOCH_TIMESTAMP;
-
-      for (const p of this.paymentDates) {
-        latest = Math.max(p.getTime(), latest);
-      }
-      const d = new Date(latest);
-
       let highestTariff = 0;
       if (tariffs.length) {
         for (const tariff of tariffs) {
           highestTariff = Math.max(
             highestTariff,
-            this.calculateUnapplied(tariff, d, h.getAllFees(tariff, service))
+            this.calculateUnapplied(tariff, h.getAllFees(tariff, service))
           );
         }
       }
@@ -35,11 +27,19 @@ class UserAccount {
     }
   }
 
-  calculateUnapplied(tariff, lastCalculationDate, fees) {
-    let sum = 0;
+  getLastCalculationDate() {
+    let latest = UserAccount.EPOCH_TIMESTAMP;
 
+    for (const p of this.paymentDates) {
+      latest = Math.max(p.getTime(), latest);
+    }
+    return new Date(latest);
+  }
+
+  calculateUnapplied(tariff, fees) {
+    let sum = 0;
     for (const date of fees.keys()) {
-      if (date > lastCalculationDate) {
+      if (date > this.getLastCalculationDate()) {
         sum +=
           fees.get(date) * (tariff.getType().isUnitBased() ? UNIT_RATE : 1) +
           tariff.getAdditionalFee();
