@@ -26,13 +26,11 @@ class UserAccount {
   getHighestTariff(service, history) {
     const tariffs = service.getTariffs();
     let highestTariff = 0;
-    if (tariffs.length) {
-      for (const tariff of tariffs) {
-        highestTariff = Math.max(
-          highestTariff,
-          this.calculateUnapplied(tariff, history.getAllFees(tariff, service))
-        );
-      }
+    for (const tariff of tariffs) {
+      highestTariff = Math.max(
+        highestTariff,
+        this.calculateUnapplied(tariff, history.getAllFees(tariff, service))
+      );
     }
     return highestTariff;
   }
