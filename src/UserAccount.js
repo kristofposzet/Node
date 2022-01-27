@@ -9,9 +9,13 @@ class UserAccount {
 
   recalculateBalance() {
     for (const service of this.services) {
-      const history = this.calculationHistoryService.retrieveHistory(service);
-      this.payTariff(history, this.getHighestTariff(service, h));
+      this.recalculateService(service);
     }
+  }
+
+  recalculateService(service) {
+    const history = this.calculationHistoryService.retrieveHistory(service);
+    this.payTariff(history, this.getHighestTariff(service, history));
   }
 
   payTariff(history, highestTariff) {
