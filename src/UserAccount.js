@@ -23,7 +23,10 @@ class UserAccount {
       let highestTariff = 0;
       if (tariffs.length) {
         for (const tariff of tariffs) {
-          highestTariff = Math.max(highestTariff, this.calculateUnapplied(tariff, d, h, service));
+          highestTariff = Math.max(
+            highestTariff,
+            this.calculateUnapplied(tariff, d, h.getAllFees(tariff, service))
+          );
         }
       }
 
@@ -32,8 +35,7 @@ class UserAccount {
     }
   }
 
-  calculateUnapplied(tariff, lastCalculationDate, h, service) {
-    const fees = h.getAllFees(tariff, service);
+  calculateUnapplied(tariff, lastCalculationDate, fees) {
     let sum = 0;
 
     for (const date of fees.keys()) {
