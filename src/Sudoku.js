@@ -148,6 +148,13 @@ const tryFindSImpleSolution = () => {
     if (isSolved()) {
       return 0;
     }
+
+    if (trySolveSudoku()) {
+      return -2;
+    }
+  }
+
+  function trySolveSudoku() {
     let isNotPerformedAction = true;
     for (let i = 0; i < 9; i++) {
       for (let j = 0; j < 9; j++) {
@@ -160,11 +167,7 @@ const tryFindSImpleSolution = () => {
         }
       }
     }
-
-    if (isNotPerformedAction) {
-      // no action for whole table of cells
-      return -2;
-    }
+    return isNotPerformedAction;
   }
 
   function trySolveCell(i, j) {
