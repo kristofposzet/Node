@@ -59,7 +59,7 @@ const trySolveCell = (str, col) => {
     return 0;
   }
   if (variants.length === 0) {
-    return -1;
+    throw new NoVariantsError();
   }
   return (table[str][col] = variants[0]);
 };
@@ -141,32 +141,35 @@ const tryFindSImpleSolution = () => {
       setSolution();
       return 0;
     }
+    try {
+      let isNotPerformedAction = true;
+      for (let i = 0; i < 9; i++) {
+        for (let j = 0; j < 9; j++) {
+          let retCode = 0;
+          let isCellActionPerformed = false;
+          if (table[i][j] === 0) {
+            retCode = trySolveCell(i, j);
+            if (retCode > 0) {
+              // cell was solved
+              isCellActionPerformed = true;
+            }
+          }
 
-    let isNotPerformedAction = true;
-    for (let i = 0; i < 9; i++) {
-      for (let j = 0; j < 9; j++) {
-        let retCode = 0;
-        let isCellActionPerformed = false;
-        if (table[i][j] === 0) {
-          retCode = trySolveCell(i, j);
-          if (retCode > 0) {
-            // cell was solved
-            isCellActionPerformed = true;
+          if (isCellActionPerformed) {
+            isNotPerformedAction = false;
           }
         }
-        if (retCode === -1) {
-          result = 'ERROR: input is not a sudoku\n';
-          return -1;
-        }
-        if (isCellActionPerformed) {
-          isNotPerformedAction = false;
-        }
       }
-    }
 
-    if (isNotPerformedAction) {
-      // no action for whole table of cells
-      return -2;
+      if (isNotPerformedAction) {
+        // no action for whole table of cells
+        return -2;
+      }
+    } catch (err) {
+      if (err instanceof NoVariantsError) {
+        result = 'ERROR: input is not a sudoku\n';
+        return -1;
+      }
     }
   }
 };
@@ -189,3 +192,10 @@ exports.setInput = (value) => {
 
 exports.getResult = () => result;
 exports.getSolution = () => solution;
+
+class NoVariantsError extends Error {
+  constructor(message) {
+    super(message);
+    this.name = this.constructor.name;
+  }
+}
