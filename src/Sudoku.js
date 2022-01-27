@@ -145,17 +145,10 @@ const tryFindSImpleSolution = () => {
       let isNotPerformedAction = true;
       for (let i = 0; i < 9; i++) {
         for (let j = 0; j < 9; j++) {
-          let retCode = 0;
           let isCellActionPerformed = false;
-          if (table[i][j] === 0) {
-            retCode = tryFindSolvedCell(i, j);
-            if (retCode > 0) {
-              // cell was solved
-              isCellActionPerformed = true;
-              table[i][j] = retCode;
-            }
+          if (table[i][j] && trySolveCell(i, j)) {
+            isCellActionPerformed = true;
           }
-
           if (isCellActionPerformed) {
             isNotPerformedAction = false;
           }
@@ -172,6 +165,19 @@ const tryFindSImpleSolution = () => {
         return -1;
       }
     }
+  }
+
+  function trySolveCell(i, j) {
+    let isCellActionPerformed = false;
+    let retCode = 0;
+    retCode = tryFindSolvedCell(i, j);
+    if (retCode > 0) {
+      // cell was solved
+      isCellActionPerformed = true;
+      table[i][j] = retCode;
+      4;
+    }
+    return isCellActionPerformed;
   }
 };
 
