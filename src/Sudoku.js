@@ -45,7 +45,7 @@ const initCellsFromInput = () => {
  * if more then 1 variant -  return 0 (no solution yet)
  * if no variants -- error, return "-1"
  */
-const trySolveCell = (str, col) => {
+const tryFindSolvedCell = (str, col) => {
   let variants = [...ALL_DIGITS];
   const variantsToExclude = [
     ...getSolvedByRow(col),
@@ -61,7 +61,7 @@ const trySolveCell = (str, col) => {
   if (variants.length === 0) {
     throw new NoVariantsError();
   }
-  return (table[str][col] = variants[0]);
+  return variants[0];
 };
 
 const getSolvedBySector = (str, col) => {
@@ -148,10 +148,11 @@ const tryFindSImpleSolution = () => {
           let retCode = 0;
           let isCellActionPerformed = false;
           if (table[i][j] === 0) {
-            retCode = trySolveCell(i, j);
+            retCode = tryFindSolvedCell(i, j);
             if (retCode > 0) {
               // cell was solved
               isCellActionPerformed = true;
+              table[i][j] = retCode;
             }
           }
 
