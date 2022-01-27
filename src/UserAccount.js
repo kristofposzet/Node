@@ -23,11 +23,7 @@ class UserAccount {
       let highestTariff = 0;
       if (tariffs.length) {
         for (const tariff of tariffs) {
-          const tariffType = tariff.getType();
-          highestTariff = Math.max(
-            highestTariff,
-            this.calculateUnapplied(tariff, d, h, tariffType, service)
-          );
+          highestTariff = Math.max(highestTariff, this.calculateUnapplied(tariff, d, h, service));
         }
       }
 
@@ -36,13 +32,15 @@ class UserAccount {
     }
   }
 
-  calculateUnapplied(tariff, lastCalculationDate, h, t, service) {
+  calculateUnapplied(tariff, lastCalculationDate, h, service) {
     const fees = h.getAllFees(tariff, service);
     let sum = 0;
 
     for (const date of fees.keys()) {
       if (date > lastCalculationDate) {
-        sum += fees.get(date) * (t.isUnitBased() ? UNIT_RATE : 1) + tariff.getAdditionalFee();
+        sum +=
+          fees.get(date) * (tariff.getType().isUnitBased() ? UNIT_RATE : 1) +
+          tariff.getAdditionalFee();
       }
     }
     return sum;
