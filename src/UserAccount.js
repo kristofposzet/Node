@@ -10,8 +10,7 @@ class UserAccount {
   recalculateBalance() {
     for (const service of this.services) {
       const h = this.calculationHistoryService.retrieveHistory(service);
-      let highestTariff = this.getHighestTariff(service, h);
-      this.payTariff(h, highestTariff);
+      this.payTariff(h, this.getHighestTariff(service, h));
     }
   }
 
