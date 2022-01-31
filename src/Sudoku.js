@@ -9,7 +9,11 @@ let table = [],
 
 exports.findSimpleSolution = () => {
   result = solution = '';
-  initCellsFromInput();
+  initTableCellsFromInput();
+  findSolutionOfTable();
+};
+
+const findSolutionOfTable = () => {
   try {
     tryFindSImpleSolution();
     setSolution();
@@ -25,8 +29,7 @@ exports.findSimpleSolution = () => {
   }
 };
 
-const initCellsFromInput = () => {
-  table = [];
+const initTableCellsFromInput = () => {
   const rows = input.split('\n');
 
   for (let i = 0; i < 9; i++) {
@@ -46,12 +49,6 @@ const initCellsFromInput = () => {
   }
 };
 
-/**
- * Verify variants of the cell
- * if single variant is left -- it is a solution,  return it
- * if more then 1 variant -  return 0 (no solution yet)
- * if no variants -- error, return "-1"
- */
 const tryFindSolvedCell = (str, col) => {
   let variants = [...ALL_DIGITS];
   const variantsToExclude = [
