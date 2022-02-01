@@ -19,6 +19,7 @@
   },
   "homepage": "https://github.com/kristofposzet/Node#readme",
   "dependencies": {
+    "dotenv": "^15.0.0",
     "nodemon": "^2.0.15"
   }
 }
